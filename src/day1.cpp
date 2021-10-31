@@ -46,8 +46,14 @@ int main() {
 
     vector<int> expenseReport = readInput("../input/day01.txt");
     vector<int> answer1 = twoSum(expenseReport, 2020);
-	cout << "Part 1: " << expenseReport[answer1[0]] << " x " << expenseReport[answer1[1]] << " = " << expenseReport[answer1[0]]*expenseReport[answer1[1]] << endl;
+	cout << "Part 1: "
+         << expenseReport[answer1[0]] << " x "
+         << expenseReport[answer1[1]] << " = "
+         << expenseReport[answer1[0]]*expenseReport[answer1[1]]
+         << endl;
     vector<int> answer2 = threeSum(expenseReport, 2020);
-	cout << "Part 2: " << expenseReport[answer2[0]]*expenseReport[answer2[1]]*expenseReport[answer2[2]] << endl;
+	cout << "Part 2: "
+         << expenseReport[answer2[0]]*expenseReport[answer2[1]]*expenseReport[answer2[2]]
+         << endl;
     return 0;
 }
