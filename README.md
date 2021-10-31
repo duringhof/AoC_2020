@@ -8,4 +8,4 @@ This repository contains my solutions to the 2020 edition of Advent of Code (or 
 
 3. Build the project: `make build`
 
-4. Run the resulting executable: `./build/day1` (or choose another day of you want of coarse)
+4. Run one of the resulting executables: `./build/day1` (just pick the day of you want to run!)
