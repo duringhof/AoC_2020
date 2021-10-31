@@ -10,4 +10,4 @@ This repository contains my solutions to the 2020 edition of Advent of Code (or 
 
 3. Build the project: `cmake .. && make`
 
-4. Run one of the resulting executables: `./build/day1` (just pick the day of you want to run!)
+4. Run one of the resulting executables: `./build/day01` (just pick the day of you want to run!)
