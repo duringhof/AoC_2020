@@ -8,6 +8,9 @@ project(AoC_2020)
 
 include_directories(include)
 
-add_executable(day01 src/day01.cpp)
-add_executable(day02 src/day02.cpp)
-add_executable(day03 src/day03.cpp)
+file( GLOB APP_SOURCES src/*.cpp )
+foreach( sourcefile ${APP_SOURCES} )
+    file(RELATIVE_PATH filename ${CMAKE_CURRENT_SOURCE_DIR}/src ${sourcefile})
+    string( REPLACE ".cpp" "" file ${filename} )
+    add_executable( ${file} ${sourcefile} )
+endforeach( sourcefile ${APP_SOURCES} )
