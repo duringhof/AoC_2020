@@ -1,0 +1,1 @@
+add_library(aoc_lib aoc_generic.cpp)
