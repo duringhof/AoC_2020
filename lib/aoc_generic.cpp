@@ -26,6 +26,26 @@ vector<string> readLines(string file) {
     return lines;
 }
 
+vector<vector<bool>> readMaze(string file) {
+	// Reads input file and return a vector<vector<bool>> called input
+	vector<vector<bool>> maze;
+	ifstream inputFile(file);
+	string line;
+	while (getline(inputFile, line)){
+		vector<bool> row;
+		for (char c : line) {
+			if (c == '#') {
+				row.push_back(true);
+			} else {
+				row.push_back(false);
+			}
+		}
+		maze.push_back(row);
+	}
+	inputFile.close();
+	return maze;
+}
+
 vector<string> split(const string &original, char delimiter, int maxSplits) {
 
 	vector<string> result;
