@@ -35,7 +35,10 @@ bool validPasswordB(const string& line) {
 int main() {
 
     vector<string> lines = readLines("../input/day02.txt");
-	cout << "Number of valid passwords is: "
+	cout << "Number of valid A passwords is: "
+         << count_if(lines.begin(), lines.end(), validPasswordA)
+         << endl;
+	cout << "Number of valid B passwords is: "
          << count_if(lines.begin(), lines.end(), validPasswordB)
          << endl;
     return 0;

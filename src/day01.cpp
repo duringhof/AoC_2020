@@ -39,6 +39,9 @@ int main() {
          << endl;
     vector<int> answer2 = threeSum(expenseReport, 2020);
 	cout << "Part 2: "
+         << expenseReport[answer2[0]] << " x "
+         << expenseReport[answer2[1]] << " x "
+         << expenseReport[answer2[2]] << " = "
          << expenseReport[answer2[0]]*expenseReport[answer2[1]]*expenseReport[answer2[2]]
          << endl;
     return 0;
