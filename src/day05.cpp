@@ -32,15 +32,17 @@ int calcId(string input) {
 int main() {
 
     vector<string> boardingpasses = readLines("../input/day05.txt");
-    
-    int highestId = 0;
+
+    vector<int> seatIds;
 
     for(auto boardingpass : boardingpasses) {
-        if (calcId(boardingpass) > highestId) {
-            highestId = calcId(boardingpass);
-        }
+
+        int id = calcId(boardingpass);
+        seatIds.push_back(id);
     }
 
-    cout << "The highest boarding pass Id is:  " << highestId << endl;
+    sort(seatIds.begin(), seatIds.end());
+
+    cout << "The highest boarding pass Id is:  " << seatIds[seatIds.size()-1] <<  endl;
     return 0;
 }
