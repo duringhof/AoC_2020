@@ -1,6 +1,6 @@
 # Advent of Code 2020
 
-This repository contains my solutions to the 2020 edition of Advent of Code (or AoC). While I did not participate in the AoC in 2020, I plan to use the assignments to prepare myself for the 2021 edition.
+This repository contains my solutions to the 2020 edition of Advent of Code (or AoC). While I did not participate in the AoC in 2020, I am using  the assignments to prepare myself for the 2021 edition.
 
 ## Instructions to build the project
 
