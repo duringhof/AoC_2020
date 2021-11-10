@@ -43,6 +43,12 @@ int main() {
 
     sort(seatIds.begin(), seatIds.end());
 
+    for(int i=1; i<seatIds.size()-1; i++) {
+        if (seatIds[i] - seatIds[i-1] > 1) {
+            cout << "Seat id: " << seatIds[i-1] + 1 << endl;
+        }
+    }
+
     cout << "The highest boarding pass Id is:  " << seatIds[seatIds.size()-1] <<  endl;
     return 0;
 }
