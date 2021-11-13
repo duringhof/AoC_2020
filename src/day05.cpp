@@ -1,4 +1,3 @@
-
 #include "aoc_generic.hpp"
 
 using namespace std;
