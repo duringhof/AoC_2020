@@ -7,11 +7,13 @@ public:
     string brightness;
     string color;
     vector<Bag> children;
+    vector<int> child_counts;
 
     Bag(string brightness, string color) : brightness(brightness),color(color) {}
 
-    void addChild(Bag child) {
+    void addChild(Bag child, int count) {
         children.push_back(child);
+        child_counts.push_back(count);
     }
 
 };
@@ -35,25 +37,25 @@ vector<Bag> readBags(vector<string> lines) {
                 break;
             case 8:
                 bags.push_back(Bag(words[0], words[1]));
-                bags[bags.size()-1].addChild(Bag(words[5], words[6]));
+                bags[bags.size()-1].addChild(Bag(words[5], words[6]), stoi(words[4]));
                 break;
             case 12:
                 bags.push_back(Bag(words[0], words[1]));
-                bags[bags.size()-1].addChild(Bag(words[5], words[6]));
-                bags[bags.size()-1].addChild(Bag(words[9], words[10]));
+                bags[bags.size()-1].addChild(Bag(words[5], words[6]), stoi(words[4]));
+                bags[bags.size()-1].addChild(Bag(words[9], words[10]), stoi(words[8]));
                 break;
             case 16:
                 bags.push_back(Bag(words[0], words[1]));
-                bags[bags.size()-1].addChild(Bag(words[5], words[6]));
-                bags[bags.size()-1].addChild(Bag(words[9], words[10]));
-                bags[bags.size()-1].addChild(Bag(words[13], words[14]));
+                bags[bags.size()-1].addChild(Bag(words[5], words[6]), stoi(words[4]));
+                bags[bags.size()-1].addChild(Bag(words[9], words[10]), stoi(words[8]));
+                bags[bags.size()-1].addChild(Bag(words[13], words[14]), stoi(words[12]));
                 break;
             case 20:
                 bags.push_back(Bag(words[0], words[1]));
-                bags[bags.size()-1].addChild(Bag(words[5], words[6]));
-                bags[bags.size()-1].addChild(Bag(words[9], words[10]));
-                bags[bags.size()-1].addChild(Bag(words[13], words[14]));
-                bags[bags.size()-1].addChild(Bag(words[17], words[18]));
+                bags[bags.size()-1].addChild(Bag(words[5], words[6]), stoi(words[4]));
+                bags[bags.size()-1].addChild(Bag(words[9], words[10]), stoi(words[8]));
+                bags[bags.size()-1].addChild(Bag(words[13], words[14]), stoi(words[12]));
+                bags[bags.size()-1].addChild(Bag(words[17], words[18]), stoi(words[16]));
                 break;
         }
     }
@@ -72,6 +74,18 @@ vector<Bag> findParents(vector<Bag> bags, string brightness, string color) {
     return parents;
 }
 
+int countChildren(vector<Bag> bags, string brightness, string color) {
+    int count = 0;
+    for (auto bag : bags) {
+        if(bag.color == color && bag.brightness == brightness) {
+            for (int i=0; i < bag.children.size(); i++) {
+                count += bag.child_counts[i];
+                count += bag.child_counts[i]*countChildren(bags, bag.children[i].brightness, bag.children[i].color);
+            }
+        }
+    }
+    return count;
+}
 
 int main() {
 
@@ -91,5 +105,6 @@ int main() {
     }
 
     cout << "The number of bags that can contain at least one shiny gold bag is: " << parents.size() << endl;
+    cout << "The number of required bags inside your shiny gold bag is: " << countChildren(bags, "shiny", "gold") << endl;
     return 0;
 }
