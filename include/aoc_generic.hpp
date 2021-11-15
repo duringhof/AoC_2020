@@ -7,6 +7,8 @@
 
 std::vector<int> readInput(std::string file);
 
+std::vector<long int> readInputLong(std::string file);
+
 std::vector<std::string> readLines(std::string file);
 
 std::vector<std::vector<bool>> readMaze(std::string file);

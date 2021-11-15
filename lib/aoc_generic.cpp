@@ -14,6 +14,18 @@ vector<int> readInput(string file){
 	return input;
 };
 
+vector<long int> readInputLong(string file){
+    // Reads input file and return a vector<int> called input
+	vector<long int> input;
+	ifstream inputFile(file);
+	long int number;
+	while (inputFile >> number){
+		input.push_back(number);
+	}
+	inputFile.close();
+	return input;
+};
+
 vector<string> readLines(string file) {
     // Reads input file and return a vector<string> called input
     vector<string> lines;
