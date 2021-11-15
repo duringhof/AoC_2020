@@ -31,14 +31,10 @@ vector<Instruction> readInstructions(vector<string> lines) {
     return instructions;
 }
 
-int main() {
-
-    vector<string> lines = readLines("../input/day08.txt");
-    vector<Instruction> instructions = readInstructions(lines);   
+int runProgram(vector<Instruction> instructions) {
     vector<bool> hasRun(instructions.size(), false);
     int accumulator = 0;
     for (int i = 0; i < instructions.size(); i++) {
-        cout << "i: " << i << " - Acc = " << accumulator << endl;
         if (hasRun[i]) {
             break;
         }
@@ -53,8 +49,15 @@ int main() {
             continue;
         }
     }
+    return accumulator;
+}
+
+int main() {
+
+    vector<string> lines = readLines("../input/day08.txt");
+    vector<Instruction> instructions = readInstructions(lines);   
     
-    cout << "Part 1 - The value in the accumulator before entering the loop is: " << accumulator << endl;
+    cout << "Part 1 - The value in the accumulator before entering the loop is: " << runProgram(instructions) << endl;
 
     cout << "Day 8 is not finished" << endl;
 
