@@ -31,10 +31,12 @@ vector<Instruction> readInstructions(vector<string> lines) {
     return instructions;
 }
 
-int runProgram(vector<Instruction> instructions) {
+pair<int,bool> runProgram(vector<Instruction> instructions) {
     vector<bool> hasRun(instructions.size(), false);
     int accumulator = 0;
+    int j = 0;
     for (int i = 0; i < instructions.size(); i++) {
+        j = i;
         if (hasRun[i]) {
             break;
         }
@@ -49,7 +51,8 @@ int runProgram(vector<Instruction> instructions) {
             continue;
         }
     }
-    return accumulator;
+    bool earlyExit = j < instructions.size()-1;
+    return make_pair(accumulator, earlyExit);
 }
 
 int main() {
@@ -57,9 +60,22 @@ int main() {
     vector<string> lines = readLines("../input/day08.txt");
     vector<Instruction> instructions = readInstructions(lines);   
     
-    cout << "Part 1 - The value in the accumulator before entering the loop is: " << runProgram(instructions) << endl;
-
-    cout << "Day 8 is not finished" << endl;
+    pair<int,bool> result = runProgram(instructions);
+    cout << "Part 1 - The value in the accumulator before entering the loop is: " << result.first << endl;
+    
+    int j = -1;
+    while (result.second) {
+        vector<Instruction> newinstructions = instructions;
+        j++;
+        if (newinstructions[j].op == jmp) {
+            newinstructions[j].op = nop;
+            result = runProgram(newinstructions);
+        } else if (newinstructions[j].op == nop) {
+            newinstructions[j].op = jmp;
+            result = runProgram(newinstructions);
+        }   
+    }
+    cout << "Part 2 - The value in the accumulator after correct program termination: " << result.first << endl;
 
     return 0;
 }
