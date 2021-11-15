@@ -3,7 +3,7 @@
 using namespace std;
 
 vector<int> twoSum(vector<int>& nums, int target) {
-    // Returns the product of the first found pair of numbers whos sum is equal to target
+    // Returns the indices of the first found pair of numbers whos sum is equal to target
     int len = nums.size();
     for(int i = 0; i < len; i++) {
         for(int j = i + 1; j < len; j++) {
@@ -15,7 +15,7 @@ vector<int> twoSum(vector<int>& nums, int target) {
 };
 
 vector<int> threeSum(vector<int>& nums, int target) {
-    // Returns the product of the first found combination of three numbers whos sum is equal to target
+    // Returns the indices of the first found combination of three numbers whos sum is equal to target
     int len = nums.size();
     for(int i = 0; i < len; i++) {
         for(int j = i + 1; j < len; j++) {
