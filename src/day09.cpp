@@ -22,20 +22,54 @@ vector<long int> createPreamble(vector<long int> nums, long int target) {
     return preamble;
 };
 
+long int sumOfElements(vector<long int> nums) {
+    long int sum = 0;
+    for(int i = 0; i < nums.size(); i++) {
+        sum += nums[i];
+    }
+    return sum;
+};
+
 int main() {
 
     vector<long int> numbers = readInputLong("../input/day09.txt");
+
+    long int answer_part_1 = 0;
 
     for(int i = 25; i < numbers.size(); i++) {
         vector<long int> preamble = createPreamble(numbers, i);
         vector<int> indices = twoSum(preamble, numbers[i]);
         if(indices[0] == -1 && indices[1] == -1) {
-            cout << "Part 1: At index " << i << ", the number " << numbers[i] << " does not have the XMAS property" << endl;;
+            cout << "Part 1: At index " << i << ", the number " << numbers[i] << " does not have the XMAS property" << endl;
+            answer_part_1 = numbers[i];
             break;
         }
     }
+
+    int startposition = 0;
+    vector<long int> contiguousList = { numbers[0] };
+    while (sumOfElements(contiguousList) != answer_part_1) {
+        if (sumOfElements(contiguousList) > answer_part_1) {
+            contiguousList.erase(contiguousList.begin());
+            startposition++;
+        } else {
+            contiguousList.push_back(numbers[contiguousList.size()+startposition]);
+        }
+    }
     
-    cout << "Day 9 is not done yet, only debugging output for now: " << numbers[999] << endl;
+    long int smallest = contiguousList[0];
+    long int largest = contiguousList[0];
+
+    for(int i = 0; i < contiguousList.size(); i++) {
+        if (contiguousList[i] < smallest) {
+            smallest = contiguousList[i];
+        }
+        if (contiguousList[i] > largest) {
+            largest = contiguousList[i];
+        }
+    }
+
+    cout << "Part 2: The encryption weakness is " << smallest+largest << endl;
 
     return 0;
 }
