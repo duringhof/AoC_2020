@@ -7,6 +7,12 @@ struct Instruction {
     int distance;
 };
 
+struct Position {
+    int x;
+    int y;
+    char direction;
+};
+
 vector<Instruction> readInstructions(vector<string> lines) {
     vector<Instruction> instructions;
     for (auto line : lines) {
@@ -18,48 +24,48 @@ vector<Instruction> readInstructions(vector<string> lines) {
     return instructions;
 }
 
-void executeInstruction(Instruction instruction, int& x, int& y, char& facing) {
+void executeInstruction(Instruction instruction, Position& position) {
     if (instruction.direction == 'N') {
-        y += instruction.distance;
+        position.y += instruction.distance;
     } else if (instruction.direction == 'S') {
-        y -= instruction.distance;
+        position.y -= instruction.distance;
     } else if (instruction.direction == 'E') {
-        x += instruction.distance;
+        position.x += instruction.distance;
     } else if (instruction.direction == 'W') {
-        x -= instruction.distance;
+        position.x -= instruction.distance;
     } else if (instruction.direction == 'L') {
         for (int i = 0; i < instruction.distance/90; i++) {
-            if (facing == 'N') {
-                facing = 'W';
-            } else if (facing == 'W') {
-                facing = 'S';
-            } else if (facing == 'S') {
-                facing = 'E';
-            } else if (facing == 'E') {
-                facing = 'N';
+            if (position.direction == 'N') {
+                position.direction = 'W';
+            } else if (position.direction == 'W') {
+                position.direction = 'S';
+            } else if (position.direction == 'S') {
+                position.direction = 'E';
+            } else if (position.direction == 'E') {
+                position.direction = 'N';
             }
         }
     } else if (instruction.direction == 'R') {
         for (int i = 0; i < instruction.distance/90; i++) {
-            if (facing == 'N') {
-                facing = 'E';
-            } else if (facing == 'E') {
-                facing = 'S';
-            } else if (facing == 'S') {
-                facing = 'W';
-            } else if (facing == 'W') {
-                facing = 'N';
+            if (position.direction == 'N') {
+                position.direction = 'E';
+            } else if (position.direction == 'E') {
+                position.direction = 'S';
+            } else if (position.direction == 'S') {
+                position.direction = 'W';
+            } else if (position.direction == 'W') {
+                position.direction = 'N';
             }
         }
     } else if (instruction.direction == 'F') {
-        if (facing == 'N') {
-            y += instruction.distance;
-        } else if (facing == 'S') {
-            y -= instruction.distance;
-        } else if (facing == 'E') {
-            x += instruction.distance;
-        } else if (facing == 'W') {
-            x -= instruction.distance;
+        if (position.direction == 'N') {
+            position.y += instruction.distance;
+        } else if (position.direction == 'S') {
+            position.y -= instruction.distance;
+        } else if (position.direction == 'E') {
+            position.x += instruction.distance;
+        } else if (position.direction == 'W') {
+            position.x -= instruction.distance;
         }
     }
 }
@@ -68,16 +74,14 @@ int main() {
 
     vector<Instruction> instructions = readInstructions(readLines("../input/day12.txt"));
 
-    char facing = 'E';
-    int x = 0;
-    int y = 0;
+    Position ship = {0, 0, 'E'};
 
     for (auto instruction : instructions) {
-        executeInstruction(instruction, x, y, facing);
+        executeInstruction(instruction, ship);
     }
 
     cout << "Part 1 - The Manhattan Distance between new and original location: "
-         << abs(x) + abs(y) << endl;
+         << abs(ship.x) + abs(ship.y) << endl;
 
     return 0;
 }
