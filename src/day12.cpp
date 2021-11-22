@@ -13,6 +13,11 @@ struct Position {
     char direction;
 };
 
+struct Waypoint {
+    int x;
+    int y;
+};
+
 vector<Instruction> readInstructions(vector<string> lines) {
     vector<Instruction> instructions;
     for (auto line : lines) {
@@ -70,18 +75,58 @@ void executeInstruction(Instruction instruction, Position& position) {
     }
 }
 
+void executeInstruction(Instruction instruction, Position& position, Waypoint& waypoint) {
+    if (instruction.direction == 'N') {
+        waypoint.y += instruction.distance;
+    } else if (instruction.direction == 'S') {
+        waypoint.y -= instruction.distance;
+    } else if (instruction.direction == 'E') {
+        waypoint.x += instruction.distance;
+    } else if (instruction.direction == 'W') {
+        waypoint.x -= instruction.distance;
+    } else if (instruction.direction == 'L') {
+        for (int i = 0; i < instruction.distance/90; i++) {
+            Waypoint newwaypoint = waypoint;
+            newwaypoint.x = -waypoint.y;
+            newwaypoint.y = waypoint.x;
+            waypoint = newwaypoint;
+        }
+    } else if (instruction.direction == 'R') {
+        for (int i = 0; i < instruction.distance/90; i++) {
+            Waypoint newwaypoint = waypoint;
+            newwaypoint.x = waypoint.y;
+            newwaypoint.y = -waypoint.x;
+            waypoint = newwaypoint;
+        }
+    } else if (instruction.direction == 'F') {
+        position.x += waypoint.x * instruction.distance;
+        position.y += waypoint.y * instruction.distance;
+    }
+}
+
 int main() {
 
     vector<Instruction> instructions = readInstructions(readLines("../input/day12.txt"));
 
-    Position ship = {0, 0, 'E'};
+    Position shipA = {0, 0, 'E'};
 
     for (auto instruction : instructions) {
-        executeInstruction(instruction, ship);
+        executeInstruction(instruction, shipA);
     }
 
     cout << "Part 1 - The Manhattan Distance between new and original location: "
-         << abs(ship.x) + abs(ship.y) << endl;
+         << abs(shipA.x) + abs(shipA.y) << endl;
+
+    Position shipB = {0, 0, 'E'};
+
+    Waypoint waypoint = {10, 1};
+
+    for (auto instruction : instructions) {
+        executeInstruction(instruction, shipB, waypoint);
+    }
+
+    cout << "Part 2 - The Manhattan Distance between new and original location: "
+         << abs(shipB.x) + abs(shipB.y) << endl;
 
     return 0;
 }
