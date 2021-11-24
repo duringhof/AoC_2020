@@ -4,7 +4,7 @@ using namespace std;
 
 struct Memory {
     int address;
-    int value;
+    long value;
 };
 
 struct Instruction {
@@ -38,20 +38,63 @@ vector<Instruction> parseInstructions(vector<string> lines) {
     return instructions;
 }
 
+string toBinary(long int n, int length) {
+    string r;
+    while(n!=0) {
+        r = (n%2 == 0 ? "0" : "1") + r;
+        n /= 2;
+    }
+    while(r.length() < length) {
+        r = "0" + r;
+    }
+    return r;
+}
+
+long applyMask(long n, string mask) {
+    string binary = toBinary(n, mask.length());
+    long result = 0;
+    for (int i = 0; i < binary.length(); i++) {
+        if (mask[mask.length()-i-1] != 'X') {
+            binary[mask.length()-i-1] = mask[mask.length()-i-1];
+        }
+        result += binary[mask.length()-i-1] == '1' ? pow(2,i) : 0;
+    }
+    return result;
+}
+
+long sumValuesInMemory(vector<Memory> memory) {
+    long sum = 0;
+    for (auto m : memory) {
+        sum += m.value;
+    }
+    return sum;
+}
+
 int main() {
 
     vector<string> lines = readLines("../input/day14.txt");
     vector<Instruction> instructions = parseInstructions(lines);
+    vector<Memory> memory = {};
 
     for (auto instruction : instructions) {
-        cout << instruction.mask << endl;
         for (auto operation : instruction.operations) {
-            cout << operation.address << " " << operation.value << endl;
+            bool done = false;
+            for (Memory& mem : memory) {
+                if (mem.address == operation.address) {
+                    mem.value = applyMask(operation.value, instruction.mask);
+                    //cout << "Overwritten " << mem.address << " with " << mem.value << endl;
+                    done = true;
+                }
+            }
+            if (!done) {
+                memory.push_back({operation.address, applyMask(operation.value, instruction.mask)});
+                //cout << "Added " << memory.back().address << " with value " << memory.back().value << endl;
+            }
         }
     }
     
-    cout << "Part 1 - Not done yet... "
-         << instructions.size() << endl
+    cout << "Part 1 - The sum of all values in memory is: "
+         << sumValuesInMemory(memory) << endl
          << "Part 2 - Not done yet... " << endl;
 
     return 0;
